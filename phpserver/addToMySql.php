@@ -37,7 +37,7 @@ $allvideo = $argv[12];
 									WHERE `name_pc` = '$pcName'";
 	} else {
 		// Если записи нет, то добавляем новую запись
-		$insertSQL="INSERT INTO `pc` (`id_pc`, `name_pc`, `domain_pc`, `owner_pc`, `totalmemory_pc`, `osSerial_pc`, `boardManufacturer_pc`, `boardProduct_pc`, `boardSerial_pc`, `procName_pc`, `procSocket_pc`, `memory_pc`, `drive_pc`, `video_pc`) VALUES (NULL, '$pcName', '$pcDomain', '$pcUser', '$pcTotalMem', '$osCaption', '$osArch', '$osRegUser', '$osSerial', '$boardManufacturer', '$boardProduct', '$boardSerial', '$cpuName', '$cpuSoket', '', '$alldrive', '$allvideo')";
+		$insertSQL="INSERT INTO `pc` (`id_pc`, `name_pc`, `domain_pc`, `owner_pc`, `totalmemory_pc`, `osCaption_pc`, `boardManufacturer_pc`, `boardProduct_pc`, `boardSerial_pc`, `procName_pc`, `procSocket_pc`, `memory_pc`, `drive_pc`, `video_pc`) VALUES (NULL, '$pcName', '$pcDomain', '$pcUser', '$pcTotalMem', '$osCaption', '$boardManufacturer', '$boardProduct', '$boardSerial', '$cpuName', '$cpuSoket', '', '$alldrive', '$allvideo')";
 	}
 	// Очистим запрос
 	$Ru->free();
