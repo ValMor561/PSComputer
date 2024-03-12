@@ -1,5 +1,5 @@
 param (
-    [string]$phpScriptPath
+    [string]$url
 )
 
 # Получаем объект WMI для текущего компьютера
@@ -45,4 +45,22 @@ $graphicsCardInfo = $graphicsCard.Name
 #Write-Output "$diskInfo"
 #Write-Output "$graphicsCardInfo"
 
-php -f $phpScriptPath "$computerName", "$domain", "$user", "$totalPhysicalMemory", "$operatingSystemName", "$motherboardManufacturer", "$motherboardModel", "$motherboardSerialNumber", "$processorName", "$processorSocket", "$diskInfo", "$graphicsCardInfo"
+$data = @{
+    computerName = $computerName
+    domain = $domain
+    user = $user
+    totalPhysicalMemory = $totalPhysicalMemory
+    operatingSystemName = $operatingSystemName
+    motherboardManufacturer = $motherboardManufacturer
+    motherboardModel = $motherboardModel
+    motherboardSerialNumber = $motherboardSerialNumber
+    processorName = $processorName
+    processorSocket = $processorSocket
+    diskInfo = $diskInfo
+    graphicsCardInfo = $graphicsCardInfo
+}
+$jsonData = $data | ConvertTo-Json
+
+$response = Invoke-RestMethod -Uri $url -Method Post -Body $jsonData -ContentType "application/json; charset=utf-8"
+
+Write-Host $response

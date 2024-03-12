@@ -1,21 +1,23 @@
 <?php
-
 require_once('require/open_mysql.php'); /* Открытие базы */
 
+$jsonData = file_get_contents('php://input');
+
+$data = json_decode($jsonData, true, 512, JSON_UNESCAPED_UNICODE);
 // Переобозначаем аргументы из командной строки в новые переменные
 // $argv[0] is '/path/to/wwwpublic/path/to/script.php'
-$pcName = $argv[1];
-$pcDomain = $argv[2];
-$pcUser = $argv[3];
-$pcTotalMem = $argv[4];
-$osCaption = $argv[5];
-$boardManufacturer = $argv[6];
-$boardProduct = $argv[7];
-$boardSerial = $argv[8];
-$cpuName = $argv[9];
-$cpuSoket = $argv[10];
-$alldrive = $argv[11];
-$allvideo = $argv[12];
+$pcName = $data['computerName'];
+$pcDomain = $data['domain'];
+$pcUser = $data['user'];
+$pcTotalMem = $data['totalPhysicalMemory'];
+$osCaption = $data['operatingSystemName'];
+$boardManufacturer = $data['motherboardManufacturer'];
+$boardProduct = $data['motherboardModel'];
+$boardSerial = $data['motherboardSerialNumber'];
+$cpuName = $data['processorName'];
+$cpuSoket = $data['processorSocket'];
+$alldrive = $data['diskInfo'];
+$allvideo = $data['graphicsCardInfo'];
 
 //Проверка повтора записей идет по имени компьютера
 	$selectSQLU = "SELECT COUNT(*) FROM `pc` WHERE `name_pc` = '$pcName'";
@@ -57,4 +59,8 @@ $success=$mysql->query ($insertSQL);
 
 
 
-require_once('require/close_mysql.php'); /* Закрытие базы */ ?>
+require_once('require/close_mysql.php'); /* Закрытие базы */ 
+
+$response = ['status' => 'success', 'message' => 'Data received successfully'];
+echo json_encode($response);
+?>
